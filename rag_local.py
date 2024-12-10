@@ -9,13 +9,13 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
 
-os.environ['HF_TOKEN'] = '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'
-os.environ["MISTRAL_API_KEY"] = 'O4uISBokqds8Bt6xXMrYIvEMntNHA68K'
-os.environ['LANGCHAIN_API_KEY'] = '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'
+os.environ['HF_TOKEN'] = getpass.getpass('HF')
+os.environ["MISTRAL_API_KEY"] = getpass.getpass('Mistral')
+os.environ['LANGCHAIN_API_KEY'] = getpass.getpass('LangChain')
 
 def get_llm_resp(q:str):
     model = ChatOllama(model="gemma2")
-    vectorstore = FAISS.load_local('../faiss_storage_1500_300/',
+    vectorstore = FAISS.load_local('./faiss_storage_1500_300/',
                                 embeddings=MistralAIEmbeddings(model="mistral-embed"),
                                 allow_dangerous_deserialization=True)
 
