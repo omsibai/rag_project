@@ -29,10 +29,10 @@ def stack_page():
     col1, col2 = st.columns(2, gap='large')
 
     with col1:
-        st.image('Desktop/jupyter/RAG_PROJECT/RAG_LOCAL/logo/langchain.jpg')
+        st.image('logo/langchain.jpg')
 
     with col2:
-        st.image('Desktop/jupyter/RAG_PROJECT/RAG_LOCAL/logo/ollama.jpg')
+        st.image('logo/ollama.jpg')
 
 
 
@@ -55,7 +55,7 @@ def query_page():
     
     model = ChatOllama(model="gemma2")
 
-    vectorstore = FAISS.load_local('Desktop/jupyter/RAG_PROJECT/RAG_LOCAL/faiss_storage_1500_300',
+    vectorstore = FAISS.load_local('faiss_storage_1500_300',
                                 embeddings=MistralAIEmbeddings(model="mistral-embed"),
                                 allow_dangerous_deserialization=True)
 
@@ -104,7 +104,7 @@ def change_prompt():
     if (len(template) != 0):
         prompt.template = template
     else:
-        template = open("Desktop/jupyter/RAG_PROJECT/RAG_LOCAL/default template.txt", "r").read()
+        template = open("default template.txt", "r").read()
         prompt.template = template
 
     return prompt
