@@ -52,8 +52,9 @@ def query_page():
 
 
 
-    
-    model = ChatOllama(model="gemma2")
+    model = ChatMistralAI(model="mistral-large-latest")
+
+    #model = ChatOllama(model="gemma2")
 
     vectorstore = FAISS.load_local('faiss_storage_1500_300',
                                 embeddings=MistralAIEmbeddings(model="mistral-embed"),
