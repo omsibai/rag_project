@@ -1,0 +1,7 @@
+streamlit==1.41.0
+
+langchain-ollama
+langchain-community
+langchain-mistralai
+langchain
+langchain-core 
