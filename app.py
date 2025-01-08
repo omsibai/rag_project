@@ -16,7 +16,7 @@ import os
 import getpass
 #-----------------------------------------------------------------------------------------------------------
 
-
+    
 # Титульная страница
 def title_page():
     st.title('Приложение по проектной деятельности: рекомендательная система с использованием RAG подхода')
@@ -46,18 +46,17 @@ def format_docs(docs):
 def query_page():
     st.title("🦜🔗 Ask model about games to play!")
 
-    mistral_api_key = st.sidebar.text_input("MistralAI API Key", type="password")
-
-    os.environ["MISTRAL_API_KEY"] = mistral_api_key
+    mistral_api_key = st.secrets["MISTRAL_API_KEY"]
 
 
 
-    model = ChatMistralAI(model="mistral-large-latest")
+
+    model = ChatMistralAI(model="mistral-large-latest",api_key=mistral_api_key)
 
     #model = ChatOllama(model="gemma2")
 
     vectorstore = FAISS.load_local('faiss_storage_1500_300',
-                                embeddings=MistralAIEmbeddings(model="mistral-embed"),
+                                embeddings=MistralAIEmbeddings(model="mistral-embed",api_key=mistral_api_key),
                                 allow_dangerous_deserialization=True)
 
     retriever = vectorstore.as_retriever( search_type = 'similarity_score_threshold',
@@ -84,9 +83,7 @@ def query_page():
         )
         submitted = st.form_submit_button("Submit")
         resp = ""
-        if len(mistral_api_key) == 0:
-            st.warning("Please enter your MistralAI API key!", icon="⚠")
-        if submitted and len(mistral_api_key) != 0:
+        if submitted:
             while(resp==""):
                 try:
                     resp = rag_chain.invoke(text)
